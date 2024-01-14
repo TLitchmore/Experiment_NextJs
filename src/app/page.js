@@ -2,10 +2,11 @@
 import { get } from 'http'
 import Link from 'next/link'
 
-async function getData() {
+export async function getData() {
     const res = await fetch("http://localhost:5000")
     const data = await res.json()
     console.log(data)
+    return Response.json(data)
 }
 
 export const metadata = {
@@ -14,6 +15,7 @@ export const metadata = {
 
 export default async function Page(){
     const something= getData()
-    var oh = Response.json(something).text()
-    return( <><h1>Hello</h1><Link href="/gallery">Gallery</Link></>)
+    var oh2 = (await (await something).text()).toString()
+    var oh = oh2
+    return( <><h1>{oh}</h1><Link href="/gallery">Gallery</Link></>)
 }
